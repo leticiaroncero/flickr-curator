@@ -81,10 +81,15 @@ async function createFlickrGallery(title, description, photoUrls) {
 
     photoIds = photoUrls.map(url => url.split('/')[5])
     for (id of photoIds) {
-        await flickr.galleries.addPhoto({
-            gallery_id: galleryId,
-            photo_id: id
-        });
+        try {
+            await flickr.galleries.addPhoto({
+                gallery_id: galleryId,
+                photo_id: id
+            });
+            console.log(`Added photo with id: ${id}`)
+        } catch (error) {
+            console.log(`Error trying to add photo with id: ${id}`)
+        }
     };
 
     console.log("Done!")
